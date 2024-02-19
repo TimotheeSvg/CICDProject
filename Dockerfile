@@ -5,7 +5,6 @@ COPY package*.json ./
 
 RUN npm install
 COPY . .
-zaeazeza
 EXPOSE 3000
 
 CMD ["node", "server/index.js"]
