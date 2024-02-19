@@ -4,22 +4,21 @@ on:
   push:
 
 jobs:
-  test:
-    name: test App
+  lint:
+    name: Run ESLint
     runs-on: ubuntu-22.04
 
     steps:
-        - uses: actions/checkout@v2
-        - uses: actions/setup-node@v2
-          with:
-            node-version: '19'
-        - run: npm install
-        - run: npm run lint
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-#  build:
-#    name: Build image
-#    # Faire le job pour build l'image docker
-#
-#  test:
-#    name: App test
-#    # Faire le job pour curl l'app
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '19'
+
+      - name: Install
+        run: npm install
+
+      - name: Run Lint
+        run: npm run lint
