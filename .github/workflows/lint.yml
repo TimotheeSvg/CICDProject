@@ -1,24 +1,19 @@
-name: Lint Tests
+name: Lint
 
 on:
   push:
 
 jobs:
   lint:
-    name: Run ESLint
+    name: Run lint
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+        - uses: actions/checkout@v2
+        - uses: actions/setup-node@v2
+          with:
+            node-version: '19'
 
-      - name: Use Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '19'
-
-      - name: Install
-        run: npm install
-
-      - name: Run Lint
-        run: npm run lint
+        - run: |
+                npm install
+                npm run lint

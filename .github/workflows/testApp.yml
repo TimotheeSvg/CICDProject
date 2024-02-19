@@ -1,22 +1,24 @@
-name: Build Docker Image and Make Curl Request
+name: Test Docker image / api
 
 on:
   push:
-    branches: [main]  # Déclencher le workflow sur les push vers la branche main
+    branches: [main]
   pull_request_target:
     branches: [main]
     types: [opened, synchronize, reopened]
 
 jobs:
   build-and-curl:
-    name: Build Docker Image and Make Curl Request
+    name: Test Docker image and run of api
     runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v2
-      - run: docker build -t myimage -f Dockerfile .
-      - run: docker container run --name mycontainer -d -p 3000:3000 myimage
-      - run: sleep 10
+      - run: |
+              docker build -t myimage -f Dockerfile .
+              docker container run --name mycontainer -d -p 3000:3000 myimage
+              sleep 5
+
       - run: |
               response=$(curl -s -w "%{http_code}" 127.0.0.1:3000)
               [ "$response" -eq 200 ] || { echo "La requête curl a échoué avec un code de réponse différent de 200."; exit 1; }
