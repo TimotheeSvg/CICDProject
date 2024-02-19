@@ -1,0 +1,40 @@
+name: Build Docker Image and Make Curl Request
+
+on:
+  push:
+    branches: [main]  # Déclencher le workflow sur les push vers la branche main
+  pull_request_target:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build-and-curl:
+    name: Build Docker Image and Make Curl Request
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build Docker Image
+        run: |
+          docker build -t mon-projet:latest .
+
+      - name: Run Docker Container
+        run: |
+          docker run -d --name mon-projet-container mon-projet:latest
+
+      - name: Wait for Container to Start
+        run: |
+          sleep 5  # Attendre que le conteneur démarre
+
+      - name: Make Curl Request
+        run: |
+          curl -s -o /dev/null -w "%{http_code}" http://localhost:8080
+
+      - name: Check Curl Response
+        run: |
+          if [ $? -ne 200 ]; then
+            echo "La requête curl a échoué avec un code de réponse différent de 200."
+            exit 1
+          fi
