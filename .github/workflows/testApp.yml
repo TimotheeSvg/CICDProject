@@ -30,7 +30,11 @@ jobs:
 
       - name: Make Curl Request
         run: |
-          curl 127.0.0.1:3000
+          curl -s -w "%{http_code}" 127.0.0.1:3000
+
+      - name: Wait for Container to Start
+        run: |
+          sleep 10  # Attendre que le curl soit fait
 
       - name: Check Curl Response
         run: |
