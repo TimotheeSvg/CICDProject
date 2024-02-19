@@ -30,7 +30,7 @@ jobs:
 
       - name: Make Curl Request
         run: |
-          curl -s -o /dev/null -w "%{http_code}" 127.0.0.1:3000
+          curl -w "%{http_code}" 127.0.0.1:3000
 
       - name: Check Curl Response
         run: |
