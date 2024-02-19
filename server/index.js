@@ -9,6 +9,6 @@ app.get('/test', (req, res) => {
   res.send(['a', 'b', 'c']);
 });
 
-app.listen(3001, () => {
+app.listen(3000, () => {
   console.log('listen');
 });
