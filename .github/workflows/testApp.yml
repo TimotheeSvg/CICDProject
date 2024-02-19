@@ -14,8 +14,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run:  |
-              docker build -t myimage -f Dockerfile .
-              docker container run --name mycontainer -d -p 3000:3000 myimage
+      - run: docker build -t myimage -f Dockerfile .
+      - run: docker container run --name mycontainer -d -p 3000:3000 myimage
+      - run: sleep 10
+      - run: |
               response=$(curl -s -w "%{http_code}" 127.0.0.1:3000)
               [ "$response" -eq 200 ] || { echo "La requête curl a échoué avec un code de réponse différent de 200."; exit 1; }
