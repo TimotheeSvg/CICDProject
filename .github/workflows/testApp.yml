@@ -16,8 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-              docker build -t ${IMAGE_NAME} -f Dockerfile .
-              docker container run --name ${CONTAINER} -d -p 3000:3000 ${IMAGE_NAME}
+              docker build -t ${IMAGE} -f Dockerfile .
+              docker container run --name ${CONTAINER} -d -p 3000:3000 ${IMAGE}
               sleep 5
       - run: |
               response=$(curl -s -w "%{http_code}" 127.0.0.1:3000)
