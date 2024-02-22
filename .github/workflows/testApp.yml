@@ -5,6 +5,8 @@ on:
     branches: [main] # Pour se protéger des dev sur main qui ne passe pas par une pr
     tags:
   pull_request_target:
+    branches: [main]
+    tags:
 
 jobs:
   build-and-curl:
