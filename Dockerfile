@@ -1,5 +1,5 @@
 FROM node:19
-WORKDIR app
+WORKDIR /app
 
 COPY package*.json ./
 
