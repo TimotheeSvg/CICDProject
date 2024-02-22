@@ -13,7 +13,10 @@ jobs:
         - uses: actions/setup-node@v2
           with:
             node-version: '19'
-
         - run: |
                 npm install
                 npm run lint
+
+        - uses: hadolint/hadolint-action@v3.1.0
+          with:
+            dockerfile: Dockerfile

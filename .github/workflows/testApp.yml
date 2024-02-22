@@ -2,23 +2,23 @@ name: Test Docker image / api
 
 on:
   push:
-    branches: [main]
+    branches: [main] # Pour se protéger des dev sur main qui ne passe pas par une pr
+    tags:
   pull_request_target:
-    branches: [main]
-    types: [opened, synchronize, reopened]
 
 jobs:
   build-and-curl:
-    name: Test Docker image and run of api
+    name: Test Docker image and run
     runs-on: ubuntu-22.04
-
+    env:
+      IMAGE: "myimage"
+      CONTAINER: "mycontainer"
     steps:
       - uses: actions/checkout@v2
       - run: |
-              docker build -t myimage -f Dockerfile .
-              docker container run --name mycontainer -d -p 3000:3000 myimage
+              docker build -t ${IMAGE_NAME} -f Dockerfile .
+              docker container run --name ${CONTAINER} -d -p 3000:3000 ${IMAGE_NAME}
               sleep 5
-
       - run: |
               response=$(curl -s -w "%{http_code}" 127.0.0.1:3000)
               [ "$response" -eq 200 ] || { echo "La requête curl a échoué avec un code de réponse différent de 200."; exit 1; }
