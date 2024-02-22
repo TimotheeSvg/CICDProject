@@ -28,8 +28,8 @@ Le projet est utilisable sous docker en local:
 Créer une image du projet: 
 > docker build -t {Nom_Image} -f Dockerfile .
 
-Run un container du projet:
-> docker container run --name {Nom_Container} -d -v {Nom_Volume}:/app/upload -p 3000:3000 testimage
+Run un container du projet (run en read-only):
+> docker container run --name {Nom_Container} -d -v {Nom_Volume}:/app/upload -p --readonly 3000:3000 testimage
 
 (Si vous n'avez pas de volume)
 > docker volume create {Nom_Volume}
@@ -77,3 +77,11 @@ Vous pouvez modifier le port dans le .env (!!Attention, si vous utilisez docker 
 2 routes
 - "/" => Permet de tester un retour de code 200 une fois l'api démarrer
 - "/write" => Permet de tester le volume
+
+# Volume
+
+1 volume est présent pour le fichier upload présent dans l'app, ce dossier sert à stocker tout ce qui est upload par les utilisateurs de l'app il est donc essentiel qu'il soit persistant.
+
+# Image
+
+Le projet se situe dans le dossier app à la racine l'image
