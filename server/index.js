@@ -9,16 +9,19 @@ app.get('/', (req, res) => {
   res.status(200).end();
 });
 app.get('/write', (req, res) => {
-  let message = 'ok'
+  const message = 'ok';
 
-  fs.appendFile('upload/messages.txt', message + '\n', (err) => {
+  fs.appendFile('upload/messages.txt', message.concat('\n'), (err) => {
     if (err) {
       return res.status(500).json({ error: 'Erreur lors de l\'écriture du fichier.' });
     }
     res.status(200).json({ message: 'Message écrit avec succès.' });
+
+    return null;
   });
 });
 
 app.listen(port, () => {
   console.log(`app listen on port ${port}`);
+  return null;
 });
